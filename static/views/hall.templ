@@ -1,0 +1,18 @@
+package views
+
+import "Salonez/models"
+
+templ Hall(hall models.Hall) {
+	<div class="hall-card-wrapper">
+		<img class="hall-card-img" src="/assets/imgPlaceholder.jpg" alt="Imagen del Salón"/>
+		<div class="hall-card-text-wrapper">
+			<div class="hall-card-header">
+				<h2 class="hall-card-title">{ hall.Nombre }</h2>
+				<p class="hall-card-desc-item-price">Precio: { hall.PrecioString() }</p>
+			</div>
+			<p class="hall-card-desc-item">Dirección: { hall.Direccion }</p>
+			<p class="hall-card-desc-item">Capacidad: { hall.Capacidad } personas</p>
+			<p class="hall-card-desc-item">Teléfono: { hall.NumeroTelefono }</p>
+		</div>
+	</div>
+}

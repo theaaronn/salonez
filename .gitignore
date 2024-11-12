@@ -1,0 +1,6 @@
+.env
+/tmp
+/auth
+/notes
+
+*_test.go

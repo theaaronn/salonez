@@ -1,0 +1,62 @@
+package views
+
+templ header(title string) {
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
+		<script defer src="/assets/script.js"></script>
+		<link rel="stylesheet" href="/assets/styles.css"></link>
+		<title>{ title }</title>
+	</head>
+}
+
+templ navBar() {
+	<nav>
+		<img id="brand-name"
+			src="/assets/brandName.png"
+			alt="Brand Name"
+			title="Home Page"
+			hx-get="/"
+		/>
+		<div id="searchbar-container">
+			<div id="searchbar">
+				<input
+					id="searchbar-input"
+					type="text"
+					placeholder="Search..."
+					name="search"
+					type="email"
+					hx-trigger="search keyup changed"
+					hx-target="main"
+					hx-get="/halls"
+					hx-include="[name='email']"
+				/>
+				<img id="searchbar-icon"
+					src="/assets/lens.svg"
+					alt="Search Icon"
+					hx-target="main"
+					hx-get="/halls"
+					hx-include="[name='email']"
+				/>
+			</div>
+		</div>
+		<div id="profile-pic-container">
+			<img id="profile-pic"
+				src="/assets/defaultPFP.svg"
+				alt="Profile Picture"
+				title="Profile Details"
+			/>
+		</div>
+	</nav>
+}
+
+templ Layout(title string, content templ.Component) {
+	@header(title)
+	<body hx-boost="true">
+		@navBar()
+		<main>
+			@content
+		</main>
+	</body>
+}

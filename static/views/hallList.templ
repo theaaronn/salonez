@@ -1,0 +1,11 @@
+package views
+
+import "Salonez/models"
+
+templ HallList(halls []models.Hall) {
+	<div id="hall-list">
+ 		for _, item := range halls {
+			@Hall(item)
+		} 
+	</div>
+}

@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+body {
+  background-color: hex(#272a2c);
+  width: 100%;
+}
+
+nav {
+  background-color: hex(#272a2c);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+main {
+  width: 100%;
+  margin: auto;
+}
+#brand-name {
+  height: 40px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+#searchbar-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+#searchbar {
+  position: relative;
+  width: 50%;
+}
+#searchbar-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid rgb(0, 178, 185);
+  border-radius: 5px;
+  padding-right: 30px;
+}
+#searchbar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+#profile-pic-container {
+  margin-left: 20px;
+}
+#profile-pic {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid rgb(0, 178, 185);
+  cursor: pointer;
+}
+
+.hall-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 400px;
+  height: 300px;
+  padding: 10px;
+  overflow: hidden;
+}
+.hall-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.hall-card-img {
+  margin: auto;
+  width: 250px;
+  height: 150px;
+  padding: 10px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.hall-card-text-wrapper {
+  flex: 1;
+}
+.hall-card-title {
+  margin-right: 10px;
+  font-size: 1.5em;
+}
+.hall-card-desc-item-price {
+  margin: 0;
+}
+.hall-card-desc-item {
+  margin: 5px 0;
+}
+
+#hall-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}

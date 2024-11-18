@@ -10,6 +10,8 @@ type Propietario = User
 type Admin = User
 
 type Hall struct {
+	Id             int32
+	ImgsPath       []string
 	Nombre         string
 	Direccion      string
 	Capacidad      string

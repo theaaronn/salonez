@@ -8,6 +8,8 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
+import "github.com/labstack/echo/v4"
+
 func header(title string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -36,7 +38,7 @@ func header(title string) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `static/views/layout.templ`, Line: 10, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `static/views/layout.templ`, Line: 12, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -50,7 +52,7 @@ func header(title string) templ.Component {
 	})
 }
 
-func navBar() templ.Component {
+func navBar(c echo.Context) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -71,7 +73,22 @@ func navBar() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav><img id=\"brand-name\" src=\"/assets/brandName.png\" alt=\"Brand Name\" title=\"Home Page\" hx-get=\"/\"><div id=\"searchbar-container\"><div id=\"searchbar\"><input id=\"searchbar-input\" type=\"text\" placeholder=\"Search...\" name=\"search\" type=\"email\" hx-trigger=\"search keyup changed\" hx-target=\"main\" hx-get=\"/halls\" hx-include=\"[name=&#39;email&#39;]\"> <img id=\"searchbar-icon\" src=\"/assets/lens.svg\" alt=\"Search Icon\" hx-target=\"main\" hx-get=\"/halls\" hx-include=\"[name=&#39;email&#39;]\"></div></div><div id=\"profile-pic-container\"><img id=\"profile-pic\" src=\"/assets/defaultPFP.svg\" alt=\"Profile Picture\" title=\"Profile Details\"></div></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav><img id=\"brand-name\" src=\"/assets/brandName.png\" alt=\"Brand Name\" title=\"Home Page\" hx-get=\"/halls\" hx-target=\"#main\" hx-swap=\"innerHTML\" hx-push-url=\"/\" hx-trigger=\"click\"><div id=\"searchbar-container\"><form id=\"searchbar-form\" hx-target=\"#main\" hx-get=\"/halls\" hx-swap=\"innerHTML\"><input id=\"searchbar-input\" type=\"search\" placeholder=\"Search...\" hx-target=\"#main\" hx-get=\"/halls\" hx-swap=\"innerHTML\" hx-trigger=\"keyup changed delay:500ms, search\" name=\"search\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if c.QueryParam("search") != "" {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"{c.QueryParam(&#34;search&#34;)}\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("> <input id=\"searchbar-button\" type=\"submit\" value=\"Search\"></form></div><div id=\"profile-pic-container\" hx-get=\"/login\" hx-target=\"#main\" hx-swap=\"innerHTML\"><img id=\"profile-pic\" src=\"/assets/defaultPFP.svg\" alt=\"Profile Picture\" title=\"Profile Details\"></div></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -79,7 +96,7 @@ func navBar() templ.Component {
 	})
 }
 
-func Layout(title string, content templ.Component) templ.Component {
+func Layout(title string, content templ.Component, c echo.Context) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -100,6 +117,10 @@ func Layout(title string, content templ.Component) templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
 		templ_7745c5c3_Err = header(title).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -108,11 +129,11 @@ func Layout(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = navBar().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = navBar(c).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<main id=\"main\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -120,7 +141,7 @@ func Layout(title string, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main></body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

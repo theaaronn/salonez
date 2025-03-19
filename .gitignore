@@ -1,6 +1,6 @@
-.env
 /tmp
 /auth
-/notes
 
+.env
+*_templ.go
 *_test.go

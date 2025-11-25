@@ -8,30 +8,29 @@ templ header(title string) {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
 		<script defer src="/assets/script.js"></script>
-		<link rel="stylesheet" href="/assets/styles.css"/>
 		<title>{ title }</title>
 	</head>
 }
 
 templ navBar(c echo.Context) {
-	<nav>
-		<img
+	<nav style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+		<div
 			id="brand-name"
-			src="/assets/brandName.png"
-			alt="Brand Name"
 			title="Home Page"
-			hx-get="/halls"
+			hx-get="/dashboard"
 			hx-target="#main"
 			hx-swap="innerHTML"
-			hx-push-url="/"
+			hx-push-url="/dashboard"
 			hx-trigger="click"
-		/>
-		<div id="searchbar-container">
+			style="height: 50px; cursor: pointer; color: white; font-weight: bold; font-size: 2rem; display: flex; align-items: center;"
+		>Salonez</div>
+		<div id="searchbar-container" style="flex: 1; max-width: 500px; margin: 0 2rem;">
 			<form
 				id="searchbar-form"
 				hx-target="#main"
 				hx-get="/halls"
 				hx-swap="innerHTML"
+				style="display: flex; gap: 0.5rem;"
 			>
 				<input
 					id="searchbar-input"
@@ -42,28 +41,37 @@ templ navBar(c echo.Context) {
 					hx-swap="innerHTML"
 					hx-trigger="keyup changed delay:500ms, search"
 					name="search"
-					if c.QueryParam("search") != "" {
-						value='{c.QueryParam("search")}'
+					style="flex: 1; padding: 0.75rem 1rem; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px; background: rgba(255,255,255,0.95); font-size: 1rem;"
+					if c != nil && c.QueryParam("search") != "" {
+						value={ c.QueryParam("search") }
 					} else {
 						value=""
 					}
 				/>
-				<input id="searchbar-button" type="submit" value="Search"/>
+				<input id="searchbar-button" type="submit" value="Search" style="padding: 0.75rem 1.5rem; background: white; color: #667eea; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;"/>
 			</form>
 		</div>
-		<div
-			id="profile-pic-container"
-			hx-get="/login"
-			hx-target="#main"
-			hx-swap="innerHTML"
-		>
-			<img
-				id="profile-pic"
-				src="/assets/defaultPFP.svg"
-				alt="Profile Picture"
-				title="Profile Details"
-			/>
-		</div>
+		if c != nil {
+			<div id="profile-pic-container" style="display: flex; align-items: center;">
+				<a href="/logout" style="color: white; text-decoration: none; padding: 0.75rem 1.5rem; background: #e74c3c; border-radius: 8px; font-weight: 600; transition: all 0.3s; display: inline-block;">🚪 Logout</a>
+			</div>
+		} else {
+			<div
+				id="profile-pic-container"
+				hx-get="/login"
+				hx-target="#main"
+				hx-swap="innerHTML"
+				style="cursor: pointer; padding: 0.5rem; border-radius: 50%; background: rgba(255,255,255,0.2); transition: all 0.3s;"
+			>
+				<img
+					id="profile-pic"
+					src="/assets/defaultPFP.svg"
+					alt="Profile Picture"
+					title="Profile Details"
+					style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"
+				/>
+			</div>
+		}
 	</nav>
 }
 
@@ -71,9 +79,9 @@ templ Layout(title string, content templ.Component, c echo.Context) {
 	<!DOCTYPE html>
 	<html lang="en">
 		@header(title)
-		<body hx-boost="true">
+		<body hx-boost="true" style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #f8f9fa;">
 			@navBar(c)
-			<main id="main">
+			<main id="main" style="min-height: calc(100vh - 82px);">
 				@content
 			</main>
 		</body>

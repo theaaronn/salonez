@@ -11,38 +11,35 @@ import (
 )
 
 func ShowLoginHandler(c echo.Context) error {
-	_, err := c.Cookie("pass")
-	if err != nil {
-		return utils.Render(c, 200, views.LoginSignup())
+	// Verificar si ya tiene sesión activa
+	emailCookie, err := c.Cookie("email")
+	if err == nil && emailCookie.Value != "" {
+		userTypeCookie, _ := c.Cookie("type")
+		// Si ya está autenticado, redirigir al dashboard correspondiente
+		switch userTypeCookie.Value {
+		case "3":
+			return c.Redirect(302, "/dashboard/admin")
+		case "2":
+			return c.Redirect(302, "/dashboard/owner")
+		case "1":
+			return c.Redirect(302, "/dashboard/user")
+		}
 	}
-	userType, err := c.Cookie("type")
-	if err != nil {
-		return utils.Render(c, 200, views.LoginSignup())
-	}
-	switch userType.Value {
-	case "1":
-		return utils.Render(c, 200, views.UserMenu())
-	case "2":
-		return utils.Render(c, 200, views.PropietaryMenu())
-	case "3":
-		return utils.Render(c, 200, views.AdminMenu())
-	default:
-		return utils.Render(c, 200, views.LoginSignup())
-	}
+	// Mostrar página de login sin layout (solo el formulario)
+	return utils.Render(c, 200, views.LoginSignup())
 }
 
 func ValidateLogin(c echo.Context) error {
 	email := c.FormValue("email")
 	password := c.FormValue("password")
-	userType := c.FormValue("userType")
 
-	existent, err := db.CheckCredentials(email, password, userType)
-	if err != nil || !existent {
+	userType, err := db.CheckCredentials(email, password)
+	if err != nil || userType == "" {
 		c.Response().Header().Set("HX-Retarget", "#login-error")
 		return utils.Render(c, 422, views.LoginErr())
 	}
 
-	// TODO: Generate session passCookie
+	// Guardar cookies de sesión
 	passCookie := new(http.Cookie)
 	passCookie.Name = "pass"
 	passCookie.Value = password
@@ -55,9 +52,44 @@ func ValidateLogin(c echo.Context) error {
 	userTypeCookie.Expires = time.Now().Add(72 * time.Hour)
 	c.SetCookie(userTypeCookie)
 
-	halls, err := db.GetAllHalls()
-	if err != nil {
-		return utils.Render(c, 500, views.InternalServerError())
+	emailCookie := new(http.Cookie)
+	emailCookie.Name = "email"
+	emailCookie.Value = email
+	emailCookie.Expires = time.Now().Add(72 * time.Hour)
+	c.SetCookie(emailCookie)
+
+	// Redirigir según tipo de usuario
+	switch userType {
+	case "3": // Admin
+		return c.Redirect(302, "/dashboard/admin")
+	case "2": // Owner
+		return c.Redirect(302, "/dashboard/owner")
+	case "1": // User
+		return c.Redirect(302, "/dashboard/user")
+	default:
+		return c.Redirect(302, "/")
 	}
-	return utils.Render(c, 200, views.HallList(halls))
+}
+
+func Logout(c echo.Context) error {
+	// Borrar todas las cookies
+	passCookie := new(http.Cookie)
+	passCookie.Name = "pass"
+	passCookie.Value = ""
+	passCookie.MaxAge = -1
+	c.SetCookie(passCookie)
+
+	userTypeCookie := new(http.Cookie)
+	userTypeCookie.Name = "type"
+	userTypeCookie.Value = ""
+	userTypeCookie.MaxAge = -1
+	c.SetCookie(userTypeCookie)
+
+	emailCookie := new(http.Cookie)
+	emailCookie.Name = "email"
+	emailCookie.Value = ""
+	emailCookie.MaxAge = -1
+	c.SetCookie(emailCookie)
+
+	return c.Redirect(302, "/login")
 }

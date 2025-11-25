@@ -1,0 +1,7 @@
+tailwindcss -i "./static/views/css/app.css" -o "./public/styles.css"
+
+I need the flow for admin to see the reservations active, going from login with credentials admin
+The flow for the owner, which involves creating a hall and see the reservations made to that hall
+The flow for user, which involves cancelling and reserving a place 
+
+Keep the credentials as admin, owner and user respectively, this is for a demo

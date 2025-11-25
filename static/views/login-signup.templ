@@ -1,63 +1,32 @@
 package views
 
 templ LoginSignup() {
-	/* From Uiverse.io by andrew-demchenk0 */
-	<div class="wrapper">
-		<div class="card-switch">
-			<label class="switch">
-				<input type="checkbox" class="toggle"/>
-				<span class="slider"></span>
-				<span class="card-side"></span>
-				<div class="flip-card__inner">
-					<div class="flip-card__front">
-						<div id="login-error"></div>
-						<form class="flip-card__form" hx-post="/login" hx-target="#main">
-							<input class="flip-card__input" name="email" placeholder="Email" type="email" required/>
-							<input class="flip-card__input" name="password" placeholder="Contraseña" type="password" required/>
-							/* User Type */
-							<div class="radio-inputs">
-								<label class="radio">
-									<input type="radio" name="userType" value="1" checked=""/>
-									<span class="name">Cliente</span>
-								</label>
-								<label class="radio">
-									<input type="radio" name="userType" value="2"/>
-									<span class="name">Propietario</span>
-								</label>
-								<label class="radio">
-									<input type="radio" name="userType" value="3"/>
-									<span class="name">Administrador</span>
-								</label>
-							</div>
-							<button type="submit" class="flip-card__btn">LogIn</button>
-						</form>
-					</div>
-					<div class="flip-card__back">
-						<div class="title-err" id="signupErr"></div>
-						<form class="flip-card__form" hx-post="/signup" hx-target="#main">
-							<input class="flip-card__input" placeholder="Nombre" type="name" required/>
-							<input class="flip-card__input" name="email" placeholder="Email" type="email" required/>
-							<input class="flip-card__input" name="password" placeholder="Contraseña" type="password" required/>
-							/* User Type */
-							<div class="radio-inputs">
-								<label class="radio">
-									<input type="radio" name="userType" value="1" checked=""/>
-									<span class="name">Cliente</span>
-								</label>
-								<label class="radio">
-									<input type="radio" name="userType" value="2"/>
-									<span class="name">Propietario</span>
-								</label>
-								<label class="radio">
-									<input type="radio" name="userType" value="3"/>
-									<span class="name">Administrador</span>
-								</label>
-							</div>
-							<button class="flip-card__btn">SignUp</button>
-						</form>
-					</div>
+	<div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem;">
+		<div style="width: 100%; max-width: 400px;">
+			<div style="background: white; border-radius: 1.5rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden;">
+				<!-- Login Form -->
+				<div style="padding: 3rem 3rem;">
+					<h2 style="font-size: 2rem; font-weight: bold; color: #1f2937; text-align: center; margin-bottom: 0.5rem;">Bienvenido</h2>
+					<p style="text-align: center; color: #6b7280; margin-bottom: 2rem;">Inicia sesión en Salonez</p>
+					<div id="login-error" style="margin-bottom: 1rem;"></div>
+					<form method="POST" action="/login" style="display: flex; flex-direction: column; gap: 1.25rem; align-items: center;">
+						<div style="width: 80%;">
+							<label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Email</label>
+							<input name="email" placeholder="tu@email.com" type="text" required style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; font-size: 1rem; transition: all 0.2s; outline: none;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'"/>
+						</div>
+						<div style="width: 80%;">
+							<label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Contraseña</label>
+							<input name="password" placeholder="••••••••" type="password" required style="width: 100%; padding: 0.875rem 1rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; font-size: 1rem; transition: all 0.2s; outline: none;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'"/>
+						</div>
+						<button type="submit" style="width: 80%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 0.75rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.6)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.4)'">
+							Iniciar Sesión
+						</button>
+					</form>
+					<p style="text-align: center; color: #6b7280; font-size: 0.875rem; margin-top: 1.5rem;">
+						Demo: Usa <strong>admin</strong>, <strong>owner</strong>, o <strong>user</strong> como email
+					</p>
 				</div>
-			</label>
+			</div>
 		</div>
 	</div>
 }

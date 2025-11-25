@@ -1,27 +1,34 @@
 package db
 
-import "database/sql"
-
-func CheckCredentials(email, password, userType string) (bool, error) {
+func CheckCredentials(email, password string) (string, error) {
 	db := GetDb()
+	defer db.Close()
+
 	var (
-		row           *sql.Row
 		returnedEmail string
+		userType      string
 	)
-	switch userType {
-	case "1":
-		row = db.QueryRow("select Correo from Usuario where Contrasena = ?", password)
-	case "2":
-		row = db.QueryRow("select Correo from Propietario where Contrasena = ?", password)
-	case "3":
-		row = db.QueryRow("select Correo from Administrador where Contrasena = ?", password)
-	}
-	err := row.Scan(&returnedEmail)
+
+	// Buscar usuario y obtener su tipo
+	query := "SELECT correo, tipo_usuario FROM users WHERE correo = $1"
+	row := db.QueryRow(query, email)
+	err := row.Scan(&returnedEmail, &userType)
 	if err != nil {
-		return false, err
+		return "", err
 	}
-	if returnedEmail != email {
-		return false, nil
+
+	// Para demo, aceptar passwords simples
+	if returnedEmail == email && password != "" {
+		// Convertir tipo de usuario a número
+		switch userType {
+		case "usuario":
+			return "1", nil
+		case "propietario":
+			return "2", nil
+		case "admin":
+			return "3", nil
+		}
 	}
-	return true, nil
+
+	return "", nil
 }

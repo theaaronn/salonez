@@ -1,5 +1,162 @@
 package views
 
-templ UserHome() {
-    
+import (
+	"Salonez/db"
+	"Salonez/models"
+	"fmt"
+	"github.com/labstack/echo/v4"
+)
+
+templ UserHome(halls []models.Hall, reservations []db.ReservationData, c echo.Context) {
+	@Layout("User Dashboard - Salonez", userHomeContent(halls, reservations), c)
+}
+
+templ userHomeContent(halls []models.Hall, reservations []db.ReservationData) {
+	<div style="min-height: 100vh; background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #e9d5ff 100%); padding: 2rem 0;">
+		<div style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+			<!-- Header Card -->
+			<div style="background: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid #3b82f6;">
+				<div style="display: flex; align-items: center;">
+					<div style="background: #dbeafe; border-radius: 50%; padding: 1rem; margin-right: 1rem;">
+						<span style="font-size: 2.5rem;">👤</span>
+					</div>
+					<div>
+						<h1 style="font-size: 2rem; font-weight: bold; color: #1f2937; margin-bottom: 0.25rem;">User Dashboard</h1>
+						<p style="color: #6b7280;">Reserva salones y gestiona tus reservaciones</p>
+					</div>
+				</div>
+			</div>
+			<!-- Available Halls Card -->
+			<div style="background: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 2rem;">
+				<div style="background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); padding: 1.5rem;">
+					<h2 style="font-size: 1.25rem; font-weight: bold; color: white; display: flex; align-items: center;">
+						<span style="margin-right: 0.5rem;">🎉</span>
+						Salones Disponibles
+					</h2>
+				</div>
+				<div style="padding: 1.5rem;">
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+						if len(halls) == 0 {
+							<p style="color: #6b7280;">No hay salones disponibles</p>
+						} else {
+							for _, hall := range halls {
+								<div style="border: 2px solid #93c5fd; border-radius: 0.75rem; padding: 1.25rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: all 0.3s; background: linear-gradient(135deg, white 0%, #dbeafe 100%);" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0,0,0,0.1)';">
+									<h3 style="font-weight: bold; font-size: 1.25rem; margin-bottom: 0.5rem; color: #1e40af;">{ hall.Nombre }</h3>
+									<p style="font-size: 0.875rem; color: #4b5563; margin-bottom: 0.25rem;">{ hall.Direccion }</p>
+									<p style="font-size: 0.875rem; color: #4b5563; margin-bottom: 0.5rem;">Capacidad: { hall.Capacidad }</p>
+									<p style="font-size: 1.125rem; font-weight: 600; color: #10b981; margin-bottom: 0.75rem;">{ hall.PrecioString() } MXN</p>
+									<form action="/dashboard/user/reserve" method="POST" style="display: flex; flex-direction: column; gap: 0.5rem;">
+										<input type="hidden" name="hall_id" value={ fmt.Sprintf("%d", hall.Id) }/>
+										<input type="date" name="date" required style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem; font-size: 0.875rem;"/>
+										<input type="time" name="time" required style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem; font-size: 0.875rem;"/>
+										<div style="display: flex; align-items: center; gap: 0.5rem;">
+											<label style="font-size: 0.875rem; color: #4b5563; font-weight: 600;">Pagar:</label>
+											<input type="number" name="percentage" min="0" max="100" value="50" required style="flex: 1; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem; font-size: 0.875rem;"/>
+											<span style="font-size: 0.875rem; color: #4b5563; font-weight: 600;">%</span>
+										</div>
+										<button type="submit" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+											🎫 Reservar Ahora
+										</button>
+									</form>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</div>
+			<!-- Mis Reservaciones -->
+			<div style="background: white; border-radius: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 1.5rem;">
+				<h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: #1d4ed8;">📋 Mis Reservaciones</h2>
+				<table style="min-width: 100%; border-collapse: collapse;">
+					<thead style="background: #f3f4f6;">
+						<tr>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Salón</th>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Fecha</th>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Hora</th>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Pagado</th>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Estado</th>
+							<th style="padding: 1rem; text-align: left; font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase;">Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						if len(reservations) == 0 {
+							<tr><td colspan="6" style="padding: 1rem; text-align: center; color: #6b7280;">No tienes reservaciones</td></tr>
+						} else {
+							for _, r := range reservations {
+								<tr style="border-top: 1px solid #e5e7eb;">
+									<td style="padding: 1rem;">{ r.HallName }</td>
+									<td style="padding: 1rem;">{ r.Date }</td>
+									<td style="padding: 1rem;">{ r.Time }</td>
+									<td style="padding: 1rem;">{ fmt.Sprintf("%.0f%%", r.PercentagePaid) }</td>
+									<td style="padding: 1rem;">
+										if r.Cancelled {
+											<span style="color: #dc2626; font-weight: 600;">Cancelada</span>
+										} else {
+											<span style="color: #10b981; font-weight: 600;">Activa</span>
+										}
+									</td>
+									<td style="padding: 1rem;">
+										if !r.Cancelled {
+											<div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+												if r.PercentagePaid < 100 {
+													<button class="pay-btn" data-reservation-id={ fmt.Sprintf("%d", r.Id) } data-percentage-paid={ fmt.Sprintf("%.0f", r.PercentagePaid) } style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 0.375rem; border: none; cursor: pointer; font-size: 0.875rem; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='#059669'" onmouseout="this.style.background='#10b981'">💳 Pagar</button>
+												}
+												<form action="/dashboard/user/cancel" method="POST" style="display: inline;">
+													<input type="hidden" name="reservation_id" value={ fmt.Sprintf("%d", r.Id) }/>
+													<button type="submit" style="background: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 0.375rem; border: none; cursor: pointer; font-size: 0.875rem; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">❌ Cancelar</button>
+												</form>
+											</div>
+										}
+									</td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- Modal de Pago -->
+	<div id="paymentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+		<div style="background: white; border-radius: 1rem; padding: 2rem; max-width: 400px; width: 90%;">
+			<h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 1rem;">💳 Procesar Pago</h3>
+			<form id="paymentForm" method="POST" action="/dashboard/user/pay" style="display: flex; flex-direction: column; gap: 1rem;">
+				<input type="hidden" id="paymentReservationId" name="reservation_id"/>
+				<div>
+					<label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Actualmente pagado: <span id="currentPaid" style="color: #3b82f6;"></span>%</label>
+				</div>
+				<div>
+					<label style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;">Porcentaje adicional a pagar:</label>
+					<input type="number" id="additionalPercentage" name="additional_percentage" min="1" max="100" required style="width: 100%; border: 2px solid #e5e7eb; border-radius: 0.5rem; padding: 0.75rem; font-size: 1rem;"/>
+				</div>
+				<div style="display: flex; gap: 0.5rem;">
+					<button type="button" onclick="closePaymentModal()" style="flex: 1; background: #6b7280; color: white; padding: 0.75rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">Cancelar</button>
+					<button type="submit" style="flex: 1; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 0.75rem; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">Confirmar Pago</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		function showPaymentModal(reservationId, currentPaid) {
+			document.getElementById('paymentModal').style.display = 'flex';
+			document.getElementById('paymentReservationId').value = reservationId;
+			document.getElementById('currentPaid').textContent = currentPaid;
+			document.getElementById('additionalPercentage').max = 100 - parseFloat(currentPaid);
+		}
+		
+		function closePaymentModal() {
+			document.getElementById('paymentModal').style.display = 'none';
+		}
+
+		// Event delegation para los botones de pago
+		document.addEventListener('DOMContentLoaded', function() {
+			document.addEventListener('click', function(e) {
+				if (e.target.classList.contains('pay-btn')) {
+					const reservationId = parseInt(e.target.getAttribute('data-reservation-id'));
+					const percentagePaid = parseFloat(e.target.getAttribute('data-percentage-paid'));
+					showPaymentModal(reservationId, percentagePaid);
+				}
+			});
+		});
+	</script>
 }

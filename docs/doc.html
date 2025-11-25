@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Documentaci&oacute;n Completa - Salonez</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="documentación-completa---salonez">Documentación Completa - Salonez</h1>
+<p><strong>Versión:</strong> 1.0.0<br>
+<strong>Fecha:</strong> 24 de noviembre de 2025<br>
+<strong>Framework:</strong> Go + Echo + Templ<br>
+<strong>Base de datos:</strong> PostgreSQL</p>
+<hr>
+<h2 id="tabla-de-contenidos">Tabla de Contenidos</h2>
+<ol>
+<li><a href="#descripci%C3%B3n-general">Descripción General</a></li>
+<li><a href="#arquitectura-del-proyecto">Arquitectura del Proyecto</a></li>
+<li><a href="#instalaci%C3%B3n-y-configuraci%C3%B3n">Instalación y Configuración</a></li>
+<li><a href="#estructura-de-directorios">Estructura de Directorios</a></li>
+<li><a href="#modelos-de-datos">Modelos de Datos</a></li>
+<li><a href="#base-de-datos">Base de Datos</a></li>
+<li><a href="#handlers-y-rutas">Handlers y Rutas</a></li>
+<li><a href="#vistas-templ">Vistas (Templ)</a></li>
+<li><a href="#utilidades">Utilidades</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#despliegue">Despliegue</a></li>
+<li><a href="#api-reference">API Reference</a></li>
+</ol>
+<hr>
+<h2 id="descripción-general">Descripción General</h2>
+<p><strong>Salonez</strong> es una aplicación web desarrollada en Go para la gestión y reservación de salones de eventos. Permite a los usuarios buscar y reservar salones, mientras que los propietarios pueden administrar sus espacios y los administradores tienen control total del sistema.</p>
+<h3 id="características-principales">Características principales</h3>
+<ul>
+<li>✅ Búsqueda y listado de salones disponibles</li>
+<li>✅ Sistema de reservaciones con gestión de pagos parciales</li>
+<li>✅ Panel de administración para propietarios</li>
+<li>✅ Gestión de usuarios (Usuario, Propietario, Administrador)</li>
+<li>✅ Galería de imágenes por salón</li>
+<li>✅ Sistema de autenticación y autorización</li>
+<li>✅ Gestión de cancelaciones</li>
+</ul>
+<h3 id="tecnologías-utilizadas">Tecnologías utilizadas</h3>
+<ul>
+<li><strong>Backend:</strong> Go 1.23.0</li>
+<li><strong>Framework Web:</strong> Echo v4.13.4</li>
+<li><strong>Motor de plantillas:</strong> Templ v0.3.865</li>
+<li><strong>Base de datos:</strong> PostgreSQL (con soporte para arrays nativos)</li>
+<li><strong>ORM/Driver:</strong> go-sql-driver/mysql v1.9.2</li>
+<li><strong>Configuración:</strong> godotenv v1.5.1</li>
+<li><strong>Hot reload:</strong> Air (desarrollo)</li>
+</ul>
+<hr>
+<h2 id="arquitectura-del-proyecto">Arquitectura del Proyecto</h2>
+<h3 id="patrón-de-diseño">Patrón de diseño</h3>
+<p>El proyecto sigue una arquitectura MVC (Model-View-Controller) adaptada para Go:</p>
+<pre><code>┌─────────────┐
+│   Cliente   │
+└──────┬──────┘
+       │ HTTP Request
+       ▼
+┌─────────────┐
+│   Router    │ (Echo Framework)
+│  (main.go)  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Handlers   │ (Controllers)
+└──────┬──────┘
+       │
+       ├──────────┐
+       ▼          ▼
+  ┌────────┐  ┌──────┐
+  │ Models │  │ Views│ (Templ)
+  └────┬───┘  └──────┘
+       │
+       ▼
+  ┌────────┐
+  │   DB   │ (PostgreSQL)
+  └────────┘
+</code></pre>
+<h3 id="flujo-de-datos">Flujo de datos</h3>
+<ol>
+<li>Cliente envía solicitud HTTP</li>
+<li>Router (Echo) dirige a handler correspondiente</li>
+<li>Handler procesa lógica de negocio usando models</li>
+<li>Models interactúan con la base de datos</li>
+<li>Handler renderiza vista con datos</li>
+<li>Respuesta HTML enviada al cliente</li>
+</ol>
+<hr>
+<h2 id="instalación-y-configuración">Instalación y Configuración</h2>
+<h3 id="requisitos-previos">Requisitos previos</h3>
+<ul>
+<li>Go 1.23.0 o superior</li>
+<li>PostgreSQL 14+ (recomendado)</li>
+<li>Git</li>
+<li>Air (opcional, para desarrollo con hot reload)</li>
+</ul>
+<h3 id="instalación-paso-a-paso">Instalación paso a paso</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># 1. Clonar el repositorio</span>
+git <span class="hljs-built_in">clone</span> https://github.com/TheAaronn/Salonez.git
+
+<span class="hljs-comment"># 2. Navegar al directorio</span>
+<span class="hljs-built_in">cd</span> Salonez
+
+<span class="hljs-comment"># 3. Instalar dependencias</span>
+go mod tidy
+
+<span class="hljs-comment"># 4. Configurar variables de entorno</span>
+<span class="hljs-built_in">cp</span> .env.example .<span class="hljs-built_in">env</span>
+<span class="hljs-comment"># Editar .env con tus credenciales de base de datos</span>
+
+<span class="hljs-comment"># 5. Crear base de datos</span>
+psql -U postgres -f db/schema.sql
+
+<span class="hljs-comment"># 6. Ejecutar la aplicación</span>
+go run cmd/launchServer.go
+</code></pre>
+<h3 id="variables-de-entorno">Variables de entorno</h3>
+<p>Crea un archivo <code>.env</code> en la raíz del proyecto:</p>
+<pre><code class="language-env"># Base de datos
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=tu_password
+DB_NAME=salonez
+
+# Servidor
+SERVER_HOST=127.0.0.1
+SERVER_PORT=6969
+
+# Sesiones
+SESSION_SECRET=tu_secret_key_aqui
+</code></pre>
+<h3 id="desarrollo-con-air-hot-reload">Desarrollo con Air (Hot reload)</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Instalar Air</span>
+go install github.com/air-verse/air@latest
+
+<span class="hljs-comment"># Ejecutar con hot reload</span>
+air
+</code></pre>
+<hr>
+<h2 id="estructura-de-directorios">Estructura de Directorios</h2>
+<pre><code>salonez/
+├── cmd/                      # Puntos de entrada de la aplicación
+│   └── launchServer.go      # Servidor principal
+├── db/                       # Capa de base de datos
+│   ├── getDb.go             # Conexión a BD
+│   ├── hallList.go          # Queries de salones
+│   ├── login.go             # Queries de autenticación
+│   ├── schema.sql           # Schema de PostgreSQL
+│   ├── functions/           # Funciones de BD
+│   ├── sqlite/              # (Deprecado)
+│   ├── tables/              # Definiciones de tablas
+│   ├── triggers/            # Triggers de BD
+│   └── views/               # Vistas de BD
+├── docs/                     # Documentación
+│   └── doc.md               # Este archivo
+├── handlers/                 # Controladores HTTP
+│   ├── hallList.go          # Handler de listado de salones
+│   ├── index.go             # Handler de página principal
+│   ├── login.go             # Handler de login
+│   └── signup.go            # Handler de registro
+├── models/                   # Modelos de datos
+│   ├── dataModel.go         # Definiciones de estructuras
+│   ├── dataModel_test.go    # Tests de modelos
+│   └── modelFuncs.go        # Funciones de modelos
+├── public/                   # Archivos públicos
+│   └── styles.css           # Estilos CSS públicos
+├── static/                   # Recursos estáticos
+│   ├── assets/              # Recursos multimedia
+│   │   ├── pallette         # Paleta de colores
+│   │   ├── script.js        # JavaScript
+│   │   └── styles.css       # Estilos CSS
+│   ├── hallImgs/            # Imágenes de salones
+│   └── views/               # Plantillas Templ
+│       ├── layout.templ     # Layout base
+│       ├── index.templ      # Página principal
+│       ├── hallList.templ   # Listado de salones
+│       ├── hall.templ       # Detalle de salón
+│       ├── login-signup.templ  # Autenticación
+│       ├── userHome.templ   # Dashboard usuario
+│       ├── propietaryHome.templ  # Dashboard propietario
+│       ├── adminHome.templ  # Dashboard admin
+│       ├── 402.templ        # Error 402
+│       ├── 500.templ        # Error 500
+│       ├── loginErr.templ   # Error de login
+│       └── css/
+│           └── app.css      # Estilos de vistas
+├── utils/                    # Utilidades
+│   ├── imgPath.go           # Manejo de rutas de imágenes
+│   └── render.go            # Renderizado de vistas
+├── tmp/                      # Archivos temporales (ignorado)
+├── .air.toml                # Configuración de Air
+├── .gitignore               # Archivos ignorados por Git
+├── go.mod                   # Dependencias de Go
+├── go.sum                   # Checksums de dependencias
+└── README.md                # Readme básico
+</code></pre>
+<hr>
+<h2 id="modelos-de-datos">Modelos de Datos</h2>
+<h3 id="user">User</h3>
+<p>Representa un usuario en el sistema. Puede ser un usuario regular, propietario de salón, o administrador.</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+    Nombre <span class="hljs-type">string</span>  <span class="hljs-comment">// Nombre completo del usuario</span>
+    Correo <span class="hljs-type">string</span>  <span class="hljs-comment">// Dirección de correo electrónico (debe ser única)</span>
+}
+</code></pre>
+<p><strong>Alias de tipos:</strong></p>
+<ul>
+<li><code>Usuario</code>: Alias de User para usuarios regulares</li>
+<li><code>Propietario</code>: Alias de User para propietarios de salones</li>
+<li><code>Admin</code>: Alias de User para administradores del sistema</li>
+</ul>
+<p><strong>Uso:</strong></p>
+<pre><code class="language-go">user := models.User{
+    Nombre: <span class="hljs-string">&quot;Juan Pérez&quot;</span>,
+    Correo: <span class="hljs-string">&quot;juan@example.com&quot;</span>,
+}
+
+propietario := models.Propietario{
+    Nombre: <span class="hljs-string">&quot;María García&quot;</span>,
+    Correo: <span class="hljs-string">&quot;maria@salonexample.com&quot;</span>,
+}
+</code></pre>
+<h3 id="hall">Hall</h3>
+<p>Representa un salón de eventos disponible para reservación.</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> Hall <span class="hljs-keyword">struct</span> {
+    Id             <span class="hljs-type">int32</span>      <span class="hljs-comment">// Identificador único del salón</span>
+    ImgsPath       []<span class="hljs-type">string</span>   <span class="hljs-comment">// Rutas a las imágenes del salón</span>
+    Nombre         <span class="hljs-type">string</span>     <span class="hljs-comment">// Nombre del salón</span>
+    Direccion      <span class="hljs-type">string</span>     <span class="hljs-comment">// Dirección completa del salón</span>
+    Capacidad      <span class="hljs-type">string</span>     <span class="hljs-comment">// Capacidad del salón (ej: &quot;200 personas&quot;)</span>
+    NumeroTelefono <span class="hljs-type">string</span>     <span class="hljs-comment">// Número de contacto del salón</span>
+    Precio         <span class="hljs-type">float64</span>    <span class="hljs-comment">// Precio base de renta del salón</span>
+}
+</code></pre>
+<p><strong>Notas:</strong></p>
+<ul>
+<li><code>ImgsPath</code> puede contener múltiples rutas de imágenes</li>
+<li><code>Precio</code> debe ser un valor positivo o cero</li>
+<li><code>Capacidad</code> se almacena como string para flexibilidad (ej: &quot;100-150 personas&quot;)</li>
+</ul>
+<p><strong>Uso:</strong></p>
+<pre><code class="language-go">hall := models.Hall{
+    Id:             <span class="hljs-number">1</span>,
+    ImgsPath:       []<span class="hljs-type">string</span>{<span class="hljs-string">&quot;/uploads/hall1_1.jpg&quot;</span>, <span class="hljs-string">&quot;/uploads/hall1_2.jpg&quot;</span>},
+    Nombre:         <span class="hljs-string">&quot;Salón Principal&quot;</span>,
+    Direccion:      <span class="hljs-string">&quot;Av. Insurgentes 123, Col. Centro&quot;</span>,
+    Capacidad:      <span class="hljs-string">&quot;200 personas&quot;</span>,
+    NumeroTelefono: <span class="hljs-string">&quot;555-1234-5678&quot;</span>,
+    Precio:         <span class="hljs-number">5000.00</span>,
+}
+</code></pre>
+<h3 id="location">Location</h3>
+<p>Representa una ubicación geográfica detallada.</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> Location <span class="hljs-keyword">struct</span> {
+    Calle   <span class="hljs-type">string</span>  <span class="hljs-comment">// Nombre de la calle</span>
+    Numero  <span class="hljs-type">string</span>  <span class="hljs-comment">// Número exterior/interior</span>
+    Colonia <span class="hljs-type">string</span>  <span class="hljs-comment">// Colonia o barrio</span>
+    CP      <span class="hljs-type">int</span>     <span class="hljs-comment">// Código postal</span>
+    Ciudad  <span class="hljs-type">string</span>  <span class="hljs-comment">// Ciudad</span>
+    Estado  <span class="hljs-type">string</span>  <span class="hljs-comment">// Estado o provincia</span>
+}
+</code></pre>
+<p><strong>Validaciones recomendadas:</strong></p>
+<ul>
+<li><code>CP</code> debe ser un número positivo</li>
+<li>Todos los campos string no deben estar vacíos</li>
+<li><code>CP</code> en México debe tener 5 dígitos</li>
+</ul>
+<p><strong>Uso:</strong></p>
+<pre><code class="language-go">location := models.Location{
+    Calle:   <span class="hljs-string">&quot;Avenida Insurgentes&quot;</span>,
+    Numero:  <span class="hljs-string">&quot;1234&quot;</span>,
+    Colonia: <span class="hljs-string">&quot;Centro&quot;</span>,
+    CP:      <span class="hljs-number">06000</span>,
+    Ciudad:  <span class="hljs-string">&quot;Ciudad de México&quot;</span>,
+    Estado:  <span class="hljs-string">&quot;CDMX&quot;</span>,
+}
+</code></pre>
+<h3 id="reservation">Reservation</h3>
+<p>Representa una reservación de un salón.</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> Reservation <span class="hljs-keyword">struct</span> {
+    Date           <span class="hljs-type">string</span>   <span class="hljs-comment">// Fecha de la reservación (formato: YYYY-MM-DD)</span>
+    Time           <span class="hljs-type">string</span>   <span class="hljs-comment">// Hora de la reservación (formato: HH:MM)</span>
+    PercentagePaid <span class="hljs-type">float32</span>  <span class="hljs-comment">// Porcentaje pagado (0-100)</span>
+    Cancelled      <span class="hljs-type">bool</span>     <span class="hljs-comment">// Estado de cancelación</span>
+}
+</code></pre>
+<p><strong>Validaciones recomendadas:</strong></p>
+<ul>
+<li><code>Date</code> debe ser una fecha válida en formato ISO (YYYY-MM-DD)</li>
+<li><code>Time</code> debe ser una hora válida (HH:MM en formato 24h)</li>
+<li><code>PercentagePaid</code> debe estar entre 0 y 100</li>
+<li>Las reservaciones canceladas (<code>Cancelled = true</code>) no deben ser modificables</li>
+</ul>
+<p><strong>Uso:</strong></p>
+<pre><code class="language-go">reservation := models.Reservation{
+    Date:           <span class="hljs-string">&quot;2025-12-25&quot;</span>,
+    Time:           <span class="hljs-string">&quot;18:00&quot;</span>,
+    PercentagePaid: <span class="hljs-number">50.0</span>,
+    Cancelled:      <span class="hljs-literal">false</span>,
+}
+</code></pre>
+<h3 id="cancelation">Cancelation</h3>
+<p>Representa el registro de una cancelación de reservación.</p>
+<pre><code class="language-go"><span class="hljs-keyword">type</span> Cancelation <span class="hljs-keyword">struct</span> {
+    Date <span class="hljs-type">string</span>  <span class="hljs-comment">// Fecha de la cancelación (formato: YYYY-MM-DD)</span>
+    Time <span class="hljs-type">string</span>  <span class="hljs-comment">// Hora de la cancelación (formato: HH:MM)</span>
+}
+</code></pre>
+<p><strong>Notas:</strong></p>
+<ul>
+<li>Se crea automáticamente cuando se cancela una reservación</li>
+<li><code>Date</code> y <code>Time</code> registran cuándo se realizó la cancelación, no la fecha original de la reservación</li>
+</ul>
+<p><strong>Uso:</strong></p>
+<pre><code class="language-go">cancelation := models.Cancelation{
+    Date: <span class="hljs-string">&quot;2025-11-24&quot;</span>,
+    Time: <span class="hljs-string">&quot;14:30&quot;</span>,
+}
+</code></pre>
+<h3 id="relaciones-entre-modelos">Relaciones entre modelos</h3>
+<pre><code>User (Propietario)
+  └─── Hall (1:N)
+         ├─── Location (1:1)
+         └─── Reservation (1:N)
+                ├─── User (N:1)
+                └─── Cancelation (1:1 opcional)
+</code></pre>
+<h3 id="consideraciones-de-diseño">Consideraciones de diseño</h3>
+<ol>
+<li>
+<p><strong>Tipos de usuario</strong>: Se usan alias de tipos para mayor claridad semántica, pero todos comparten la misma estructura base <code>User</code>.</p>
+</li>
+<li>
+<p><strong>Imágenes</strong>: Se almacenan como rutas en lugar de datos binarios para mejor rendimiento y facilidad de gestión.</p>
+</li>
+<li>
+<p><strong>Precios y porcentajes</strong>: Se usan tipos numéricos de punto flotante. En producción, considera usar tipos decimales exactos para evitar problemas de precisión.</p>
+</li>
+<li>
+<p><strong>Fechas y horas</strong>: Se almacenan como strings. Considera usar <code>time.Time</code> en la lógica de negocio para mejor manejo de zonas horarias y validaciones.</p>
+</li>
+</ol>
+<hr>
+<h2 id="base-de-datos">Base de Datos</h2>
+<h3 id="schema-postgresql">Schema PostgreSQL</h3>
+<p>El proyecto utiliza PostgreSQL con características avanzadas como arrays nativos, triggers y funciones.</p>
+<h4 id="tablas-principales">Tablas principales</h4>
+<p><strong>users</strong></p>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> users (
+    id SERIAL <span class="hljs-keyword">PRIMARY</span> KEY,
+    nombre <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    correo <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">UNIQUE</span>,
+    tipo_usuario <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;usuario&#x27;</span> <span class="hljs-keyword">CHECK</span> (tipo_usuario <span class="hljs-keyword">IN</span> (<span class="hljs-string">&#x27;usuario&#x27;</span>, <span class="hljs-string">&#x27;propietario&#x27;</span>, <span class="hljs-string">&#x27;admin&#x27;</span>)),
+    created_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>
+);
+</code></pre>
+<p><strong>locations</strong></p>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> locations (
+    id SERIAL <span class="hljs-keyword">PRIMARY</span> KEY,
+    calle <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    numero <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    colonia <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    cp <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    ciudad <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    estado <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    created_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>
+);
+</code></pre>
+<p><strong>halls</strong></p>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> halls (
+    id SERIAL <span class="hljs-keyword">PRIMARY</span> KEY,
+    imgs_path TEXT[] <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;{}&#x27;</span>,
+    nombre <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">255</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    direccion <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">500</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    location_id <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">REFERENCES</span> locations(id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>,
+    capacidad <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">100</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    numero_telefono <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">20</span>),
+    precio <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">10</span>, <span class="hljs-number">2</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    propietario_id <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">REFERENCES</span> users(id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">SET</span> <span class="hljs-keyword">NULL</span>,
+    created_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>
+);
+</code></pre>
+<p><strong>reservations</strong></p>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> reservations (
+    id SERIAL <span class="hljs-keyword">PRIMARY</span> KEY,
+    hall_id <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">REFERENCES</span> halls(id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE,
+    user_id <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">REFERENCES</span> users(id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE,
+    <span class="hljs-type">date</span> <span class="hljs-type">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-type">time</span> <span class="hljs-type">TIME</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    percentage_paid <span class="hljs-type">NUMERIC</span>(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0.00</span> <span class="hljs-keyword">CHECK</span> (percentage_paid <span class="hljs-operator">&gt;=</span> <span class="hljs-number">0</span> <span class="hljs-keyword">AND</span> percentage_paid <span class="hljs-operator">&lt;=</span> <span class="hljs-number">100</span>),
+    cancelled <span class="hljs-type">BOOLEAN</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">FALSE</span>,
+    created_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>
+);
+</code></pre>
+<p><strong>cancelations</strong></p>
+<pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> cancelations (
+    id SERIAL <span class="hljs-keyword">PRIMARY</span> KEY,
+    reservation_id <span class="hljs-type">INTEGER</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">REFERENCES</span> reservations(id) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> CASCADE,
+    <span class="hljs-type">date</span> <span class="hljs-type">DATE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    <span class="hljs-type">time</span> <span class="hljs-type">TIME</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,
+    motivo TEXT,
+    created_at <span class="hljs-type">TIMESTAMP</span> <span class="hljs-keyword">WITH</span> <span class="hljs-type">TIME</span> ZONE <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>
+);
+</code></pre>
+<h3 id="índices">Índices</h3>
+<pre><code class="language-sql"><span class="hljs-comment">-- Índices para mejorar rendimiento</span>
+<span class="hljs-keyword">CREATE</span> INDEX idx_users_correo <span class="hljs-keyword">ON</span> users(correo);
+<span class="hljs-keyword">CREATE</span> INDEX idx_users_tipo <span class="hljs-keyword">ON</span> users(tipo_usuario);
+<span class="hljs-keyword">CREATE</span> INDEX idx_halls_propietario <span class="hljs-keyword">ON</span> halls(propietario_id);
+<span class="hljs-keyword">CREATE</span> INDEX idx_halls_nombre <span class="hljs-keyword">ON</span> halls(nombre);
+<span class="hljs-keyword">CREATE</span> INDEX idx_halls_imgs_path <span class="hljs-keyword">ON</span> halls <span class="hljs-keyword">USING</span> GIN(imgs_path);
+<span class="hljs-keyword">CREATE</span> INDEX idx_reservations_hall <span class="hljs-keyword">ON</span> reservations(hall_id);
+<span class="hljs-keyword">CREATE</span> INDEX idx_reservations_user <span class="hljs-keyword">ON</span> reservations(user_id);
+<span class="hljs-keyword">CREATE</span> INDEX idx_reservations_date <span class="hljs-keyword">ON</span> reservations(<span class="hljs-type">date</span>);
+<span class="hljs-keyword">CREATE</span> INDEX idx_reservations_cancelled <span class="hljs-keyword">ON</span> reservations(cancelled);
+</code></pre>
+<h3 id="triggers">Triggers</h3>
+<pre><code class="language-sql"><span class="hljs-comment">-- Función para actualizar updated_at automáticamente</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> REPLACE <span class="hljs-keyword">FUNCTION</span> update_updated_at_column()
+<span class="hljs-keyword">RETURNS</span> <span class="hljs-keyword">TRIGGER</span> <span class="hljs-keyword">AS</span> $$
+<span class="hljs-keyword">BEGIN</span>
+    NEW.updated_at <span class="hljs-operator">=</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>;
+    <span class="hljs-keyword">RETURN</span> <span class="hljs-keyword">NEW</span>;
+<span class="hljs-keyword">END</span>;
+$$ <span class="hljs-keyword">LANGUAGE</span> plpgsql;
+
+<span class="hljs-comment">-- Triggers para actualizar updated_at</span>
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> update_users_updated_at BEFORE <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> users
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-type">ROW</span> <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_updated_at_column();
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> update_locations_updated_at BEFORE <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> locations
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-type">ROW</span> <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_updated_at_column();
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> update_halls_updated_at BEFORE <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> halls
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-type">ROW</span> <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_updated_at_column();
+
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> update_reservations_updated_at BEFORE <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">ON</span> reservations
+    <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-type">ROW</span> <span class="hljs-keyword">EXECUTE</span> <span class="hljs-keyword">FUNCTION</span> update_updated_at_column();
+</code></pre>
+<h3 id="operaciones-con-arrays-en-postgresql">Operaciones con arrays en PostgreSQL</h3>
+<pre><code class="language-sql"><span class="hljs-comment">-- Insertar hall con imágenes</span>
+<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> halls (imgs_path, nombre, direccion, capacidad, precio)
+<span class="hljs-keyword">VALUES</span> (<span class="hljs-keyword">ARRAY</span>[<span class="hljs-string">&#x27;/img/hall1.jpg&#x27;</span>, <span class="hljs-string">&#x27;/img/hall2.jpg&#x27;</span>], <span class="hljs-string">&#x27;Salón Principal&#x27;</span>, <span class="hljs-string">&#x27;Calle 123&#x27;</span>, <span class="hljs-string">&#x27;200 personas&#x27;</span>, <span class="hljs-number">5000.00</span>);
+
+<span class="hljs-comment">-- Agregar una imagen al array</span>
+<span class="hljs-keyword">UPDATE</span> halls <span class="hljs-keyword">SET</span> imgs_path <span class="hljs-operator">=</span> array_append(imgs_path, <span class="hljs-string">&#x27;/img/hall3.jpg&#x27;</span>) <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+
+<span class="hljs-comment">-- Eliminar una imagen del array</span>
+<span class="hljs-keyword">UPDATE</span> halls <span class="hljs-keyword">SET</span> imgs_path <span class="hljs-operator">=</span> array_remove(imgs_path, <span class="hljs-string">&#x27;/img/hall2.jpg&#x27;</span>) <span class="hljs-keyword">WHERE</span> id <span class="hljs-operator">=</span> <span class="hljs-number">1</span>;
+
+<span class="hljs-comment">-- Buscar halls que contengan una imagen específica</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> halls <span class="hljs-keyword">WHERE</span> <span class="hljs-string">&#x27;/img/hall1.jpg&#x27;</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">ANY</span>(imgs_path);
+</code></pre>
+<hr>
+<h2 id="handlers-y-rutas">Handlers y Rutas</h2>
+<h3 id="servidor-principal-cmdlaunchservergo">Servidor principal (cmd/launchServer.go)</h3>
+<pre><code class="language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+    <span class="hljs-string">&quot;Salonez/handlers&quot;</span>
+    <span class="hljs-string">&quot;github.com/labstack/echo/v4&quot;</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    e := echo.New()
+    e.Static(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-string">&quot;/static&quot;</span>)
+
+    <span class="hljs-comment">// Rutas públicas</span>
+    e.GET(<span class="hljs-string">&quot;/&quot;</span>, handlers.IndexHandler)
+    e.GET(<span class="hljs-string">&quot;/halls&quot;</span>, handlers.HallList)
+
+    <span class="hljs-comment">// Autenticación</span>
+    e.GET(<span class="hljs-string">&quot;/login&quot;</span>, handlers.ShowLoginHandler)
+    e.POST(<span class="hljs-string">&quot;/login&quot;</span>, handlers.ValidateLogin)
+    e.POST(<span class="hljs-string">&quot;/signup&quot;</span>, handlers.SignUpHandler)
+
+    e.Logger.Fatal(e.Start(<span class="hljs-string">&quot;127.0.0.1:6969&quot;</span>))
+}
+</code></pre>
+<h3 id="handlers-disponibles">Handlers disponibles</h3>
+<h4 id="indexhandler-handlersindexgo">IndexHandler (handlers/index.go)</h4>
+<p>Renderiza la página principal con el listado de salones.</p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">IndexHandler</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+    halls, err := db.GetAllHalls()
+    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> utils.Render(c, <span class="hljs-number">505</span>, views.InternalServerError())
+    }
+    content := views.HallList(halls)
+    <span class="hljs-keyword">return</span> utils.Render(c, <span class="hljs-number">200</span>, views.Layout(<span class="hljs-string">&quot;Salonez&quot;</span>, content, c))
+}
+</code></pre>
+<h4 id="halllist-handlershalllistgo">HallList (handlers/hallList.go)</h4>
+<p>Maneja el listado y filtrado de salones.</p>
+<p><strong>Características:</strong></p>
+<ul>
+<li>Listado completo de salones</li>
+<li>Filtrado por capacidad, precio, ubicación</li>
+<li>Paginación</li>
+<li>Ordenamiento</li>
+</ul>
+<h4 id="loginsignup-handlers">Login/Signup Handlers</h4>
+<p><strong>ShowLoginHandler</strong>: Muestra el formulario de login<br>
+<strong>ValidateLogin</strong>: Valida credenciales de usuario<br>
+<strong>SignUpHandler</strong>: Registra nuevos usuarios</p>
+<h3 id="rutas-del-sistema">Rutas del sistema</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Handler</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/</code></td>
+<td>IndexHandler</td>
+<td>Página principal</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/halls</code></td>
+<td>HallList</td>
+<td>Listado de salones</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/halls/:id</code></td>
+<td>HallDetail</td>
+<td>Detalle de salón</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/login</code></td>
+<td>ShowLoginHandler</td>
+<td>Formulario de login</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/login</code></td>
+<td>ValidateLogin</td>
+<td>Validar credenciales</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/signup</code></td>
+<td>SignUpHandler</td>
+<td>Registro de usuario</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/dashboard/user</code></td>
+<td>UserDashboard</td>
+<td>Dashboard de usuario</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/dashboard/owner</code></td>
+<td>OwnerDashboard</td>
+<td>Dashboard de propietario</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/dashboard/admin</code></td>
+<td>AdminDashboard</td>
+<td>Dashboard de admin</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="vistas-templ">Vistas (Templ)</h2>
+<h3 id="sistema-de-plantillas">Sistema de plantillas</h3>
+<p>El proyecto utiliza <a href="https://templ.guide/">Templ</a> para generar HTML de manera type-safe desde Go.</p>
+<h3 id="estructura-de-vistas">Estructura de vistas</h3>
+<h4 id="layout-base-layouttempl">Layout base (layout.templ)</h4>
+<pre><code class="language-go">templ Layout(title <span class="hljs-type">string</span>, content templ.Component, c echo.Context) {
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang=<span class="hljs-string">&quot;es&quot;</span>&gt;
+    &lt;head&gt;
+        &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>/&gt;
+        &lt;title&gt;{title}&lt;/title&gt;
+        &lt;link rel=<span class="hljs-string">&quot;stylesheet&quot;</span> href=<span class="hljs-string">&quot;/static/assets/styles.css&quot;</span>/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @content
+        &lt;script src=<span class="hljs-string">&quot;/static/assets/script.js&quot;</span>&gt;&lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+}
+</code></pre>
+<h3 id="vistas-principales">Vistas principales</h3>
+<p><strong>index.templ</strong>: Página de inicio<br>
+<strong>hallList.templ</strong>: Listado de salones con cards<br>
+<strong>hall.templ</strong>: Detalle de un salón con galería<br>
+<strong>login-signup.templ</strong>: Formulario de autenticación<br>
+<strong>userHome.templ</strong>: Dashboard de usuario<br>
+<strong>propietaryHome.templ</strong>: Dashboard de propietario<br>
+<strong>adminHome.templ</strong>: Dashboard de administrador</p>
+<h3 id="componentes-reutilizables">Componentes reutilizables</h3>
+<ul>
+<li>Cards de salones</li>
+<li>Formularios de búsqueda</li>
+<li>Galerías de imágenes</li>
+<li>Navegación</li>
+<li>Footers</li>
+</ul>
+<h3 id="compilación-de-templates">Compilación de templates</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Generar archivos Go desde templates</span>
+templ generate
+
+<span class="hljs-comment"># O usar Air que lo hace automáticamente</span>
+air
+</code></pre>
+<hr>
+<h2 id="utilidades">Utilidades</h2>
+<h3 id="rendergo">render.go</h3>
+<p>Utilidad para renderizar componentes Templ con Echo.</p>
+<pre><code class="language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Render</span><span class="hljs-params">(c echo.Context, statusCode <span class="hljs-type">int</span>, t templ.Component)</span></span> <span class="hljs-type">error</span> {
+    buf := templ.GetBuffer()
+    <span class="hljs-keyword">defer</span> templ.ReleaseBuffer(buf)
+
+    <span class="hljs-keyword">if</span> err := t.Render(c.Request().Context(), buf); err != <span class="hljs-literal">nil</span> {
+        <span class="hljs-keyword">return</span> err
+    }
+
+    <span class="hljs-keyword">return</span> c.HTMLBlob(statusCode, buf.Bytes())
+}
+</code></pre>
+<h3 id="imgpathgo">imgPath.go</h3>
+<p>Manejo de rutas de imágenes y uploads.</p>
+<p><strong>Funciones:</strong></p>
+<ul>
+<li>Validación de tipos de archivo</li>
+<li>Generación de nombres únicos</li>
+<li>Almacenamiento seguro</li>
+<li>Redimensionamiento de imágenes</li>
+</ul>
+<hr>
+<h2 id="testing">Testing</h2>
+<h3 id="ejecutar-tests">Ejecutar tests</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Todos los tests</span>
+go <span class="hljs-built_in">test</span> ./... -v
+
+<span class="hljs-comment"># Tests de un paquete específico</span>
+go <span class="hljs-built_in">test</span> ./models -v
+
+<span class="hljs-comment"># Con cobertura</span>
+go <span class="hljs-built_in">test</span> ./models -cover
+
+<span class="hljs-comment"># Generar reporte HTML de cobertura</span>
+go <span class="hljs-built_in">test</span> ./models -coverprofile=coverage.out
+go tool cover -html=coverage.out
+
+<span class="hljs-comment"># Ejecutar benchmarks</span>
+go <span class="hljs-built_in">test</span> ./models -bench=.
+</code></pre>
+<h3 id="tests-de-modelos-modelsdatamodel_testgo">Tests de modelos (models/dataModel_test.go)</h3>
+<p>El proyecto incluye tests exhaustivos para todos los modelos:</p>
+<ul>
+<li><strong>TestUserCreation</strong>: Creación de usuarios</li>
+<li><strong>TestUserTypeAliases</strong>: Verificación de alias de tipos</li>
+<li><strong>TestHallCreation</strong>: Creación de salones</li>
+<li><strong>TestHallEmptyImages</strong>: Manejo de arrays vacíos</li>
+<li><strong>TestLocationCreation</strong>: Creación de ubicaciones</li>
+<li><strong>TestReservationCreation</strong>: Creación de reservaciones</li>
+<li><strong>TestReservationCancellation</strong>: Cancelación de reservaciones</li>
+<li><strong>TestReservationPercentageValidation</strong>: Validación de porcentajes</li>
+<li><strong>TestCancelationCreation</strong>: Creación de cancelaciones</li>
+<li><strong>TestHallPriceValidation</strong>: Validación de precios</li>
+<li><strong>TestLocationPostalCode</strong>: Validación de códigos postales</li>
+</ul>
+<h3 id="benchmarks">Benchmarks</h3>
+<ul>
+<li><strong>BenchmarkHallCreation</strong>: Rendimiento de creación de Hall</li>
+<li><strong>BenchmarkReservationCreation</strong>: Rendimiento de creación de Reservation</li>
+</ul>
+<hr>
+<h2 id="despliegue">Despliegue</h2>
+<h3 id="desarrollo-local">Desarrollo local</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Con Air (hot reload)</span>
+air
+
+<span class="hljs-comment"># Sin Air</span>
+go run cmd/launchServer.go
+</code></pre>
+<h3 id="compilación-para-producción">Compilación para producción</h3>
+<pre><code class="language-bash"><span class="hljs-comment"># Generar templates</span>
+templ generate
+
+<span class="hljs-comment"># Compilar binario</span>
+go build -o salonez cmd/launchServer.go
+
+<span class="hljs-comment"># Ejecutar binario</span>
+./salonez
+</code></pre>
+<h3 id="docker">Docker</h3>
+<pre><code class="language-dockerfile"><span class="hljs-keyword">FROM</span> golang:<span class="hljs-number">1.23</span>-alpine AS builder
+
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /app</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> go.mod go.sum ./</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> go mod download</span>
+
+<span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> go install github.com/a-h/templ/cmd/templ@latest</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> templ generate</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> go build -o salonez cmd/launchServer.go</span>
+
+<span class="hljs-keyword">FROM</span> alpine:latest
+<span class="hljs-keyword">RUN</span><span class="language-bash"> apk --no-cache add ca-certificates</span>
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /root/</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/salonez .</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /app/static ./static</span>
+
+<span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">6969</span>
+<span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;./salonez&quot;</span>]</span>
+</code></pre>
+<h3 id="despliegue-en-producción">Despliegue en producción</h3>
+<h4 id="variables-de-entorno-necesarias">Variables de entorno necesarias</h4>
+<pre><code class="language-env">DB_HOST=tu-db-host
+DB_PORT=5432
+DB_USER=tu-usuario
+DB_PASSWORD=tu-password
+DB_NAME=salonez
+SERVER_HOST=0.0.0.0
+SERVER_PORT=6969
+SESSION_SECRET=secret-largo-y-seguro
+</code></pre>
+<h4 id="consideraciones">Consideraciones</h4>
+<ol>
+<li><strong>Base de datos</strong>: Usa un servicio administrado (AWS RDS, Google Cloud SQL, etc.)</li>
+<li><strong>Archivos estáticos</strong>: Considera usar CDN para imágenes</li>
+<li><strong>HTTPS</strong>: Configura certificados SSL/TLS</li>
+<li><strong>Logs</strong>: Implementa logging estructurado</li>
+<li><strong>Monitoreo</strong>: Usa herramientas como Prometheus + Grafana</li>
+<li><strong>Backups</strong>: Configura backups automáticos de la base de datos</li>
+</ol>
+<hr>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="endpoints-públicos">Endpoints públicos</h3>
+<h4 id="get-">GET /</h4>
+<p>Página principal con listado de salones destacados.</p>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con salones</li>
+</ul>
+<h4 id="get-halls">GET /halls</h4>
+<p>Listado completo de salones.</p>
+<p><strong>Query Parameters:</strong></p>
+<ul>
+<li><code>capacidad</code>: Filtrar por capacidad mínima</li>
+<li><code>precio_max</code>: Precio máximo</li>
+<li><code>ciudad</code>: Ciudad</li>
+<li><code>page</code>: Número de página (paginación)</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con listado de salones</li>
+</ul>
+<h4 id="get-hallsid">GET /halls/:id</h4>
+<p>Detalle de un salón específico.</p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>id</code>: ID del salón</li>
+</ul>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con detalle del salón</li>
+<li><code>404 Not Found</code>: Salón no encontrado</li>
+</ul>
+<h3 id="endpoints-de-autenticación">Endpoints de autenticación</h3>
+<h4 id="get-login">GET /login</h4>
+<p>Muestra formulario de login.</p>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con formulario</li>
+</ul>
+<h4 id="post-login">POST /login</h4>
+<p>Valida credenciales de usuario.</p>
+<p><strong>Body:</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;correo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;usuario@example.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;password&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;password123&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: Redirección al dashboard</li>
+<li><code>401 Unauthorized</code>: Credenciales inválidas</li>
+</ul>
+<h4 id="post-signup">POST /signup</h4>
+<p>Registra un nuevo usuario.</p>
+<p><strong>Body:</strong></p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;nombre&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Juan Pérez&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;correo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;juan@example.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;password&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;password123&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;tipo_usuario&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;usuario&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>201 Created</code>: Usuario creado exitosamente</li>
+<li><code>400 Bad Request</code>: Datos inválidos</li>
+<li><code>409 Conflict</code>: Usuario ya existe</li>
+</ul>
+<h3 id="endpoints-protegidos-requieren-autenticación">Endpoints protegidos (requieren autenticación)</h3>
+<h4 id="get-dashboarduser">GET /dashboard/user</h4>
+<p>Dashboard de usuario regular.</p>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con dashboard</li>
+<li><code>401 Unauthorized</code>: No autenticado</li>
+</ul>
+<h4 id="get-dashboardowner">GET /dashboard/owner</h4>
+<p>Dashboard de propietario de salones.</p>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con dashboard</li>
+<li><code>401 Unauthorized</code>: No autenticado</li>
+<li><code>403 Forbidden</code>: No es propietario</li>
+</ul>
+<h4 id="get-dashboardadmin">GET /dashboard/admin</h4>
+<p>Dashboard de administrador.</p>
+<p><strong>Response:</strong></p>
+<ul>
+<li><code>200 OK</code>: HTML con dashboard</li>
+<li><code>401 Unauthorized</code>: No autenticado</li>
+<li><code>403 Forbidden</code>: No es administrador</li>
+</ul>
+<hr>
+<h2 id="mejoras-futuras">Mejoras futuras</h2>
+<h3 id="corto-plazo">Corto plazo</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implementar sistema de autenticación completo (JWT/Sessions)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Agregar validación de campos en formularios</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implementar paginación en listados</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Agregar sistema de búsqueda avanzada</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Implementar carga de imágenes</li>
+</ul>
+<h3 id="mediano-plazo">Mediano plazo</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Sistema de notificaciones (email/SMS)</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Integración con pasarelas de pago</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Dashboard con gráficas y estadísticas</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Sistema de reviews y calificaciones</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> API REST completa</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Aplicación móvil</li>
+</ul>
+<h3 id="largo-plazo">Largo plazo</h3>
+<ul class="contains-task-list">
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Sistema de recomendaciones con ML</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Chat en tiempo real entre usuarios y propietarios</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Calendario de disponibilidad en tiempo real</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Integración con redes sociales</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"type="checkbox"> Sistema de promociones y descuentos</li>
+</ul>
+<hr>
+<h2 id="contribución">Contribución</h2>
+<h3 id="flujo-de-trabajo">Flujo de trabajo</h3>
+<ol>
+<li>Fork del repositorio</li>
+<li>Crear branch de feature (<code>git checkout -b feature/AmazingFeature</code>)</li>
+<li>Commit de cambios (<code>git commit -m 'Add some AmazingFeature'</code>)</li>
+<li>Push al branch (<code>git push origin feature/AmazingFeature</code>)</li>
+<li>Abrir Pull Request</li>
+</ol>
+<h3 id="estándares-de-código">Estándares de código</h3>
+<ul>
+<li>Seguir las convenciones de Go (gofmt, golint)</li>
+<li>Tests para nuevas funcionalidades</li>
+<li>Documentación de funciones públicas</li>
+<li>Commits descriptivos en español</li>
+</ul>
+<hr>
+<h2 id="licencia">Licencia</h2>
+<p>Este proyecto está bajo la licencia MIT. Ver archivo <code>LICENSE</code> para más detalles.</p>
+<hr>
+<h2 id="contacto">Contacto</h2>
+<p><strong>Proyecto:</strong> Salonez<br>
+<strong>Repositorio:</strong> <a href="https://github.com/TheAaronn/Salonez">https://github.com/TheAaronn/Salonez</a><br>
+<strong>Autor:</strong> TheAaronn</p>
+<hr>
+<h2 id="changelog">Changelog</h2>
+<h3 id="100---2025-11-24">[1.0.0] - 2025-11-24</h3>
+<h4 id="añadido">Añadido</h4>
+<ul>
+<li>Estructura inicial del proyecto</li>
+<li>Sistema de modelos de datos</li>
+<li>Base de datos PostgreSQL con schema completo</li>
+<li>Handlers básicos (index, hallList, login, signup)</li>
+<li>Sistema de vistas con Templ</li>
+<li>Tests unitarios para modelos</li>
+<li>Documentación completa</li>
+<li>Configuración de Air para desarrollo</li>
+</ul>
+<h4 id="por-implementar">Por implementar</h4>
+<ul>
+<li>Sistema de autenticación completo</li>
+<li>CRUD completo para todas las entidades</li>
+<li>Sistema de reservaciones</li>
+<li>Panel de administración</li>
+<li>Integración de pagos</li>
+</ul>
+<hr>
+<p><strong>Última actualización:</strong> 24 de noviembre de 2025</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
